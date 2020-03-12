@@ -73,19 +73,39 @@ void TestPeek(CuTest *tc) {
 	CuAssertIntEquals(tc, h->size, 2);
 	cleanupHeap(h);
 }
+
+void TestRemoveMinSize1(CuTest *tc) {
+	Heap* h = makeHeap(2); 
+	add(h, 1, "a"); 
+	removeMin(h);
+	CuAssertIntEquals(tc, h->size, 0); 
+	cleanupHeap(h);
+}
+
+void TestAddReverseOrder(CuTest *tc) {
+	Heap* h = makeHeap(3); 
+	add(h, 9, "a"); 
+	add(h, 6, "asd"); 
+	add(h, 6, "df"); 
+	add(h, 4, "gd"); 
+	add(h, 2, "dfag"); 
+	CuAssertIntEquals(tc, h->size, 5); 
+	cleanupHeap(h);
+}
 	
 CuSuite* StrUtilGetSuite() {
   CuSuite* suite = CuSuiteNew();
 
   /** ADD YOUR TESTS HERE **/
-  //SUITE_ADD_TEST(suite, TestHeap);
-  //SUITE_ADD_TEST(suite, TestOne);
-  //SUITE_ADD_TEST(suite, TestTwo);
-  //SUITE_ADD_TEST(suite, TestAdd);
-  //SUITE_ADD_TEST(suite, TestExpandCapacity);
-  //SUITE_ADD_TEST(suite, TestBubbleUp); 
-  //SUITE_ADD_TEST(suite, TestRemoveMin);
-  SUITE_ADD_TEST(suite, TestPeek); 
+  SUITE_ADD_TEST(suite, TestHeap);
+  SUITE_ADD_TEST(suite, TestOne);
+  SUITE_ADD_TEST(suite, TestTwo);
+  SUITE_ADD_TEST(suite, TestAdd);
+  SUITE_ADD_TEST(suite, TestExpandCapacity);
+  SUITE_ADD_TEST(suite, TestBubbleUp); 
+  SUITE_ADD_TEST(suite, TestRemoveMin);
+  SUITE_ADD_TEST(suite, TestPeek);
+  SUITE_ADD_TEST(suite, TestRemoveMinSize1); 
   return suite;
 }
 

@@ -100,7 +100,12 @@ char* removeMin(Heap* h) {
 		return NULL;
 	}
 	if (h->size == 1) {
-		return h->elements[0]->value;
+		h->size -= 1;
+	       	char min[40];
+		strcpy(min, h->elements[0]->value);
+		free(h->elements[0]->value);
+		free(h->elements[0]);
+		return min;		
 	}
 	char min[40];
 	strcpy(min, h->elements[0]->value);
