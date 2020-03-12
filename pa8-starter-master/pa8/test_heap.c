@@ -62,6 +62,7 @@ void TestRemoveMin(CuTest *tc) {
 	add(h, 10, "e");
 	removeMin(h);
 	CuAssertIntEquals(tc, h->size, 4);
+	cleanupHeap(h);
 }
 
 void TestPeek(CuTest *tc) {
@@ -70,6 +71,7 @@ void TestPeek(CuTest *tc) {
 	add(h, 3, "b");
 	peek(h);
 	CuAssertIntEquals(tc, h->size, 2);
+	cleanupHeap(h);
 }
 	
 CuSuite* StrUtilGetSuite() {
@@ -83,7 +85,7 @@ CuSuite* StrUtilGetSuite() {
   //SUITE_ADD_TEST(suite, TestExpandCapacity);
   //SUITE_ADD_TEST(suite, TestBubbleUp); 
   //SUITE_ADD_TEST(suite, TestRemoveMin);
-  //SUITE_ADD_TEST(suite, TestPeek); 
+  SUITE_ADD_TEST(suite, TestPeek); 
   return suite;
 }
 
