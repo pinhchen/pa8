@@ -53,39 +53,37 @@ void TestBubbleUp(CuTest *tc) {
 	cleanupHeap(h);
 }
 
-void TestSwap(CuTest *tc) {
+void TestRemoveMin(CuTest *tc) {
+	Heap* h = makeHeap(4);
+	add(h, 2, "a");
+	add(h, 5, "b");
+	add(h, 6, "c");
+	add(h, 7, "d");
+	add(h, 10, "e");
+	removeMin(h);
+	CuAssertIntEquals(tc, h->size, 4);
+}
+
+void TestPeek(CuTest *tc) {
 	Heap* h = makeHeap(4); 
-	add(h, 3, "a"); 
-	add(h, 1, "b");
-	swap(h, 0, 1);
-       	printf("key after swap is: %d\n", h->elements[0]->key);	
-	CuAssertIntEquals(tc, h->elements[0]->key, 1);
-	cleanupHeap(h);
-}	
-
-//void TestRemoveMin(CuTest *tc) {
-	//Heap* h = makeHeap(4);
-	//add(h, 2, "a");
-	//add(h, 5, "b");
-	//add(h, 6, "c");
-	//add(h, 6, "d");
-	//removeMin(h);
-	//CuAssertIntEquals(tc, h->size, 2);
-//}
-
+	add(h, 10, "a");
+	add(h, 3, "b");
+	peek(h);
+	CuAssertIntEquals(tc, h->size, 2);
+}
 	
 CuSuite* StrUtilGetSuite() {
   CuSuite* suite = CuSuiteNew();
 
   /** ADD YOUR TESTS HERE **/
-  SUITE_ADD_TEST(suite, TestHeap);
-  SUITE_ADD_TEST(suite, TestOne);
-  SUITE_ADD_TEST(suite, TestTwo);
-  SUITE_ADD_TEST(suite, TestAdd);
-  SUITE_ADD_TEST(suite, TestExpandCapacity);
-  SUITE_ADD_TEST(suite, TestBubbleUp); 
-  //SUITE_ADD_TEST(suite, TestSwap);
-  //SUITE_ADD_TEST(suite, TestRemoveMin); 
+  //SUITE_ADD_TEST(suite, TestHeap);
+  //SUITE_ADD_TEST(suite, TestOne);
+  //SUITE_ADD_TEST(suite, TestTwo);
+  //SUITE_ADD_TEST(suite, TestAdd);
+  //SUITE_ADD_TEST(suite, TestExpandCapacity);
+  //SUITE_ADD_TEST(suite, TestBubbleUp); 
+  //SUITE_ADD_TEST(suite, TestRemoveMin);
+  //SUITE_ADD_TEST(suite, TestPeek); 
   return suite;
 }
 

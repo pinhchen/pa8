@@ -16,14 +16,15 @@ void swap(Heap* h, int index1, int index2) {
 }
 
 void expandCapacity(Heap* h) {
-	int curr_capacity = h->capacity+1; 
-	if (h->size < curr_capacity) {
+	//int curr_capacity = h->capacity+1; 
+	if (h->size < h->capacity) {
 		return; 
 	}
-	Entry** expanded = calloc(curr_capacity*2, sizeof(Entry*));
-	h->capacity = curr_capacity*2; 
+	Entry** expanded = calloc((h->capacity*2), sizeof(Entry*));
+	h->capacity = h->capacity*2; 
 	int i;	
 	for (i = 0; i < h->size; i += 1) {
+		expanded[i] = calloc(1, sizeof(Entry));
 		expanded[i] = h->elements[i];
 		free(h->elements[i]);
 	}
@@ -36,9 +37,7 @@ void bubbleUp(Heap* h, int index) {
 		return; 
 	}
 	Entry* e = h->elements[index];
-	printf("index: %d\n", index);
 	Entry* p = h->elements[(index-1)/2];
-	printf("pindex: %d\n", (index-1)/2);
 	if (e->key < p->key) {
 		swap(h, index, (index-1)/2); 
 		bubbleUp(h, (index-1)/2);
@@ -55,6 +54,7 @@ void add(Heap* h, int k, char* val) {
 	h->elements[h->size] = calloc(1, sizeof(Entry));
 	h->elements[h->size]->key = k;
 	h->elements[h->size]->value = val;
+	printf("value: %s\n", val);
 	printf("size: %d\n", h->size);
 	h->size += 1;
 	if (h->size == 1){
@@ -62,28 +62,37 @@ void add(Heap* h, int k, char* val) {
 	}
 	else {	
 		bubbleUp(h, h->size-1);
-	}	
+	}
+	printHeap(h);
 }
 
 void bubbleDown(Heap* h, int index) {
+	printHeap(h);	
 	if ( index >= h->size){
 		return;
 	}
-	int left_index = index*2 + 1; 
+	printf("bubbling down currKey: %d\n", h->elements[index]->key);
+	int left_index = index*2 + 1;
+       	printf("bubbling down: %d\n", index);
+	printf("bubbling down left: %d\n", left_index);	
 	if (left_index >= h->size){
 		return;
 	}
 	int smaller_child_i =  left_index; 
-	int right_index = index*2 + 2; 
+	int right_index = index*2 + 2;
+       	printf("bubbling down right: %d\n", right_index);	
 	if (h->elements[right_index] != NULL && h->elements[left_index] != NULL 
 			&& h->elements[right_index]->key < h->elements[left_index]->key){
 		smaller_child_i = right_index; 
 	}
+	printf("bd smallerchild: %d\n", smaller_child_i);
 	if (h->elements[smaller_child_i] != NULL && h->elements[index] != NULL 
 			&& h->elements[smaller_child_i]->key < h->elements[index]->key){
-		swap(h, index, smaller_child_i); 
+		swap(h, index, smaller_child_i);
+	      	printf("bd swapped: %d\n", h->elements[index]->key);
+		printf("bd after swap index: %d\n", smaller_child_i);	
 		bubbleDown(h, smaller_child_i); 
-	}	
+	}
 }
 
 char* removeMin(Heap* h) {
@@ -97,6 +106,7 @@ char* removeMin(Heap* h) {
 	h->elements[0] = h->elements[h->size-1];
 	h->size -= 1;
 	bubbleDown(h, 0);
+	printf("removed min: %s\n", temp->value);
 	return temp->value;
 }
 
@@ -106,7 +116,7 @@ bool isHeapAt(Heap* h, int index) {
 
 void cleanupHeap(Heap* h) {
 	int i; 
-	for (i = 0; i < h->capacity+1; i++) {
+	for (i = 0; i < h->capacity; i++) {
 		free(h->elements[i]);
 	}
 	free(h->elements); 
@@ -116,7 +126,8 @@ void cleanupHeap(Heap* h) {
 void printHeap(Heap* h) {
 	int i;
 	for (i = 0; i < h->size; i++){
-		printf("i: %d %c  ", i, h->elements[i]->key, h->elements[i]->value);
+		printf("%d: %d", i, h->elements[i]->key);
+		printf(", %s \n", h->elements[i]->value);
 	}
 }
 
@@ -124,7 +135,7 @@ Heap* makeHeap(int capacity) {
 	Heap* h = calloc(1, sizeof(Heap)); 
 	h->size = 0; 
 	h->capacity = capacity;
-	h->elements = calloc(capacity+1, sizeof(Entry*));
+	h->elements = calloc(capacity, sizeof(Entry*));
 	return h;
 }
 
