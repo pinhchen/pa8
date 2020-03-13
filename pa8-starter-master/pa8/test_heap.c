@@ -130,7 +130,22 @@ void TestBubbleDownChooseRight(CuTest *tc) {
 	removeMin(h);
 	CuAssertIntEquals(tc, h->elements[0]->key, 3);
        	cleanupHeap(h);
-}	
+}
+
+void TestBubbleDownStopEarly(CuTest *tc) {
+	Heap* h = makeHeap(2); 
+	add(h, 1, "t");
+	add(h, 2, "t");
+	add(h, 4, "t");
+	add(h, 6, "t");
+	add(h, 7, "t");
+	add(h, 8, "t");
+	add(h, 5, "t");
+	removeMin(h); 
+	CuAssertIntEquals(tc, h->elements[1]->key, 5);
+	cleanupHeap(h); 
+}
+
 	
 CuSuite* StrUtilGetSuite() {
   CuSuite* suite = CuSuiteNew();
@@ -150,6 +165,7 @@ CuSuite* StrUtilGetSuite() {
   SUITE_ADD_TEST(suite, TestPeekonEmpty);
   SUITE_ADD_TEST(suite, TestRemoveonEmpty);
   SUITE_ADD_TEST(suite, TestBubbleDownChooseRight);
+  SUITE_ADD_TEST(suite, TestBubbleDownStopEarly);
 
   return suite;
 }
