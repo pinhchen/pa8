@@ -73,7 +73,8 @@ void bubbleDown(Heap* h, int index) {
 	int right_index = index*2 + 2;
 	if (h->elements[right_index] != NULL && h->elements[left_index] != NULL 
 			&& h->elements[right_index]->key < h->elements[left_index]->key){
-		smaller_child_i = right_index; 
+		smaller_child_i = right_index;
+	       	printf("smaller child: %d\n", smaller_child_i);	
 	}
 	if (h->elements[smaller_child_i] != NULL && h->elements[index] != NULL 
 			&& h->elements[smaller_child_i]->key < h->elements[index]->key){
@@ -105,7 +106,7 @@ char* removeMin(Heap* h) {
 }
 
 bool isHeapAt(Heap* h, int index) {
-
+	return NULL;
 }
 
 void cleanupHeap(Heap* h) {
