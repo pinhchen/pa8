@@ -48,7 +48,6 @@ void TestBubbleUp(CuTest *tc) {
 	Heap* h = makeHeap(4); 
 	add(h, 3, "a");
 	add(h, 1, "b");
-	printf("Key is: %d\n", h->elements[0]->key);
 	CuAssertIntEquals(tc, h->elements[0]->key, 1);
 	cleanupHeap(h);
 }
@@ -76,8 +75,8 @@ void TestPeek(CuTest *tc) {
 
 void TestRemoveMinSize1(CuTest *tc) {
 	Heap* h = makeHeap(2); 
-	add(h, 1, "a"); 
-	removeMin(h);
+	add(h, 1, "a");
+       	removeMin(h);	
 	CuAssertIntEquals(tc, h->size, 0); 
 	cleanupHeap(h);
 }

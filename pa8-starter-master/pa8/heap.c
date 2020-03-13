@@ -23,10 +23,7 @@ void expandCapacity(Heap* h) {
 	h->capacity = h->capacity*2; 
 	int i;	
 	for (i = 0; i < h->size; i += 1) {
-		//expanded[i]->value = h->elements[i]->value;
 		expanded[i] = h->elements[i];
-		//free(h->elements[i->value);
-		//free(h->elements[i]);
 	}
 	free(h->elements); 
 	h->elements = expanded;
@@ -55,7 +52,6 @@ void add(Heap* h, int k, char* val) {
 	h->elements[h->size]->key = k;
 	h->elements[h->size]->value = calloc(strlen(val)+1, sizeof(char));
 	strcpy(h->elements[h->size]->value,val);
-	printf("size: %d\n", h->size);
 	h->size += 1;
 	if (h->size == 1){
 		return; 
@@ -63,34 +59,25 @@ void add(Heap* h, int k, char* val) {
 	else {	
 		bubbleUp(h, h->size-1);
 	}
-	printHeap(h);
 }
 
 void bubbleDown(Heap* h, int index) {
-	printHeap(h);	
 	if ( index >= h->size){
 		return;
 	}
-	printf("bubbling down currKey: %d\n", h->elements[index]->key);
 	int left_index = index*2 + 1;
-       	printf("bubbling down: %d\n", index);
-	printf("bubbling down left: %d\n", left_index);	
 	if (left_index >= h->size){
 		return;
 	}
 	int smaller_child_i =  left_index; 
 	int right_index = index*2 + 2;
-       	printf("bubbling down right: %d\n", right_index);	
 	if (h->elements[right_index] != NULL && h->elements[left_index] != NULL 
 			&& h->elements[right_index]->key < h->elements[left_index]->key){
 		smaller_child_i = right_index; 
 	}
-	printf("bd smallerchild: %d\n", smaller_child_i);
 	if (h->elements[smaller_child_i] != NULL && h->elements[index] != NULL 
 			&& h->elements[smaller_child_i]->key < h->elements[index]->key){
 		swap(h, index, smaller_child_i);
-	      	printf("bd swapped: %d\n", h->elements[index]->key);
-		printf("bd after swap index: %d\n", smaller_child_i);	
 		bubbleDown(h, smaller_child_i); 
 	}
 }
@@ -101,20 +88,19 @@ char* removeMin(Heap* h) {
 	}
 	if (h->size == 1) {
 		h->size -= 1;
-	       	char min[40];
+	       	static char min[40];
 		strcpy(min, h->elements[0]->value);
 		free(h->elements[0]->value);
 		free(h->elements[0]);
 		return min;		
 	}
-	char min[40];
+	static char min[40];
 	strcpy(min, h->elements[0]->value);
 	free(h->elements[0]->value);
 	free(h->elements[0]);
 	h->elements[0] = h->elements[h->size-1];
 	h->size -= 1;
 	bubbleDown(h, 0);
-	printf("removed min: %s\n", min);
 	return min;
 }
 
